@@ -52,27 +52,28 @@
        material: new THREE.MeshLambertMaterial({ color: 0xFFCC00 }),
        mesh: {
          position: {
-           x: 1,
+           x: -2,
+           y: 2,
+           x: -2,
          }
        }
      },
-     light: {
-       value: new THREE.PointLight(0xFFFFFF, 1, 500),
-
-     }
+     circle: {
+       geometry: new THREE.SphereGeometry(1, 50, 50),
+       material: new THREE.MeshLambertMaterial({ color: 0xFFCC00 }),
+       mesh: {
+         position: {
+           x: 2,
+         }
+       }
+     },
+     light:  new THREE.PointLight(0xFFFFFF, 1, 500),
     };
     
-    const { square, light } = objects;
-    const { geometry, material, mesh: squareMesh } = square;
-    const { position } = squareMesh;
-    var mesh = new THREE.Mesh(geometry, material);
-    mesh.position.x = position.x;
-    scene.add(mesh);
-    
-    scene.add(light.value);
-
+    const squareMesh = square();
     var render = () => {
       requestAnimationFrame(render);
+      
       renderer.render(scene, camera);
     };
 
@@ -80,11 +81,42 @@
 
     // Circle
     function circle() {
-      var geometry = new THREE.SphereGeometry(1, 50, 50);
-      var material = new THREE.MeshLambertMaterial({ color: 0xFFCC00 });
+      const { circle } = objects;
+      const { geometry, material, mesh: circleMesh } = circle;
+      const { position } = circleMesh;
+
       var mesh = new THREE.Mesh(geometry, material);
+      mesh.position.x = position.x;
       scene.add(mesh);
     }
+
+     
+    function square() {
+      const { square } = objects;
+      const { geometry, material, mesh: squareMesh } = square;
+      const { position } = squareMesh;
+      const { x, y, z } = position;
+
+      var mesh = new THREE.Mesh(geometry, material);
+
+      /**
+        * squareMesh.rotation.set(x, y, z);
+        * squareMesh.scale.set(x, y, z);
+        *  squareMesh.rotation.x += 0.05;
+        * squareMesh.rotation.y += 0.01;
+        * squareMesh.scale.x -= 0.05;
+      **/
+      scene.add(mesh);
+      return mesh;
+    }
+
+    function light() {
+      const { light } = objects;
+      scene.add(light);
+      light.position.set(10, 0, 25);
+    }
+
+    light();
   </script>
  </body>
 </html>
