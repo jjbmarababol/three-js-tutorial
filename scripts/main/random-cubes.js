@@ -1,3 +1,5 @@
+import * as THREE from '../vendor/three.module.js';
+
 var scene = new THREE.Scene();
     
 // FOV
@@ -58,7 +60,7 @@ function square(positions = {}) {
   const { geometry, material } = square;
   const { x, y, z } = positions;
 
-  meshX =  -10;
+ var meshX =  -10;
  for( var i = 0; i < 15; i++) {
   var mesh = new THREE.Mesh(geometry, material);
   mesh.position.x = (Math.random() - 0.5) * 10;
