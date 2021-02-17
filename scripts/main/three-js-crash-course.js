@@ -15,11 +15,20 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
 
+// create the shape
+var geometry = new THREE.BoxGeometry(1, 1, 1);
+// create a material, color or image texture
+var material = new THREE.MeshBasicMaterial({ color: 0xFFFFFF, wireframe: true });
+var cube = new THREE.Mesh(geometry, material);
+scene.add(cube);
+
+camera.position.z = 3;
 // Setup update method
 // Will be called every frame, every change
 // Game Logic
 const update = () => {
-
+  cube.rotation.x += 0.01;
+  cube.rotation.y += 0.005;
 };
 
 // Basically everything that you want to draw
@@ -35,5 +44,5 @@ const gameLoop = () =>{
   render();
 }
 
-// This needs to run at least once
+// This needs to run at least once 
 gameLoop();
