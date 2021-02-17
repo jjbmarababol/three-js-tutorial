@@ -24,8 +24,19 @@ window.addEventListener('resize', () => {
 
 // create the shape
 var geometry = new THREE.BoxGeometry(1, 1, 1);
+var cubeMaterials = [
+   new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load('../images/1.jpg'), side: THREE.DoubleSide}),
+   new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load('../images/2.jpg'), side: THREE.DoubleSide}),
+   new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load('../images/3.jpg'), side: THREE.DoubleSide}),
+   new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load('../images/4.jpg'), side: THREE.DoubleSide}),
+   new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load('../images/5.jpg'), side: THREE.DoubleSide}),
+   new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load('../images/6.jpg'), side: THREE.DoubleSide})
+];
+var material = new THREE.MeshFaceMaterial(cubeMaterials);
+
+
 // create a material, color or image texture
-var material = new THREE.MeshBasicMaterial({ color: 0xFFFFFF, wireframe: true });
+// var material = new THREE.MeshBasicMaterial({ color: 0xFFFFFF, wireframe: true });
 var cube = new THREE.Mesh(geometry, material);
 scene.add(cube);
 
