@@ -1,4 +1,4 @@
-import * as THREE from '../vendor/three.module.js';
+// import * as THREE from '../vendor/three.module.js';
 
 // Scene is the whole view, where the objects are contained and where the user will interact
 const scene = new THREE.Scene();
@@ -10,7 +10,7 @@ const scene = new THREE.Scene();
 // This is important to eliminate unnecessary rendering of the objects that aren't even viewed yet
 const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight,  0.1, 1000);
 
-const renderer = new THREE.WebGL1Renderer();
+const renderer = new THREE.WebGL1Renderer( { antialias: true });
 var { innerHeight: height, innerWidth: width } = window;
 renderer.setSize(width, height);
 document.body.appendChild(renderer.domElement);
@@ -21,6 +21,9 @@ window.addEventListener('resize', () => {
   camera.aspect = width/height;
   camera.updateProjectionMatrix();
 });
+
+controls = new THREE.OrbitControls(camera, renderer.domElement);
+
 
 // create the shape
 var geometry = new THREE.BoxGeometry(1, 1, 1);
@@ -34,8 +37,8 @@ camera.position.z = 3;
 // Will be called every frame, every change
 // Game Logic
 const update = () => {
-  cube.rotation.x += 0.01;
-  cube.rotation.y += 0.005;
+  // cube.rotation.x += 0.01;
+  // cube.rotation.y += 0.005;
 };
 
 // Basically everything that you want to draw
