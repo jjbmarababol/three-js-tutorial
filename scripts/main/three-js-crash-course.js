@@ -11,9 +11,16 @@ const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight,  0.1, 1000);
 
 const renderer = new THREE.WebGL1Renderer();
-renderer.setSize(window.innerWidth, window.innerHeight);
+var { innerHeight: height, innerWidth: width } = window;
+renderer.setSize(width, height);
 document.body.appendChild(renderer.domElement);
 
+window.addEventListener('resize', () => {
+  var { innerHeight: height, innerWidth: width } = window;
+  renderer.setSize(width, height);
+  camera.aspect = width/height;
+  camera.updateProjectionMatrix();
+});
 
 // create the shape
 var geometry = new THREE.BoxGeometry(1, 1, 1);
