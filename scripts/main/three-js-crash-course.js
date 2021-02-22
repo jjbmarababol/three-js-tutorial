@@ -22,28 +22,130 @@ window.addEventListener('resize', () => {
   camera.updateProjectionMatrix();
 });
 
-// create the shape
-var geometry = new THREE.BoxGeometry(1, 1, 1);
-var cubeMaterials = [
-   new THREE.MeshLambertMaterial({ map: new THREE.TextureLoader().load('../images/1.jpg'), side: THREE.DoubleSide}),
-   new THREE.MeshPhongMaterial({ map: new THREE.TextureLoader().load('../images/2.jpg'), side: THREE.DoubleSide}),
-   new THREE.MeshStandardMaterial({ map: new THREE.TextureLoader().load('../images/3.jpg'), side: THREE.DoubleSide}),
-   new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load('../images/4.jpg'), side: THREE.DoubleSide}),
-   new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load('../images/5.jpg'), side: THREE.DoubleSide}),
-   new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load('../images/6.jpg'), side: THREE.DoubleSide})
-];
-var material = new THREE.MeshFaceMaterial(cubeMaterials);
+// Add Control
+controls = new THREE.OrbitControls(camera, renderer.domElement);
+
+  const x = -5, y = -2 ;
+
+  const shape = new THREE.Shape();
+  shape.moveTo( x, y );
 
 
-// create a material, color or image texture
-// var material = new THREE.MeshBasicMaterial({ color: 0xFFFFFF, wireframe: true });
-var cube = new THREE.Mesh(geometry, material);
-scene.add(cube);
 
-camera.position.z = 3;
+
+  shape.lineTo( x + 0, y + 14 );
+  shape.lineTo( x + 12, y + 14 );
+  shape.lineTo( x + 12, y -14 )
+  shape.lineTo( x + 12, y + 14 );
+  shape.lineTo( x + 12, y + -10 );
+  shape.lineTo( x + 7, y + -10 );
+  shape.lineTo( x + 4, y + -7 );
+  shape.lineTo( x + 4, y + -2 );
+  shape.lineTo( x + 2, y + -2 );
+  shape.lineTo( x + 2, y + 0 );
+  
+  const extrudeSettings = {
+    steps: 1,
+    depth: 1,
+    bevelEnabled: false,
+  };
+  
+  
+  const segments = 500;
+  const r = 1;
+  let t = 0;
+
+  let material = new THREE.MeshBasicMaterial( { vertexColors: true, morphTargets: true } );
+
+				const positions = [];
+				const colors = [];
+
+        // var cols = [{
+        //   stop: 0,
+        //   color: new THREE.Color(0xf7b000)
+        // }, {
+        //   stop: .25,
+        //   color: new THREE.Color(0xdd0080)
+        // }, {
+        //   stop: .5,
+        //   color: new THREE.Color(0x622b85)
+        // }, {
+        //   stop: .75,
+        //   color: new THREE.Color(0x007dae)
+        // }, {
+        //   stop: 1,
+        //   color: new THREE.Color(0x77c8db)
+        // }]
+        // const selection = [0x4178b9, 0xbfb373, 0x35a4bf, 0xc1466a];
+
+				for ( let i = 0; i < segments; i ++ ) {
+
+					const y =Math.random(0);
+					const z = Math.random(0,3);
+
+					colors.push(y);
+        }
+        let a = new THREE.Color(0xf7b000);
+
+        console.log(a);
+        
+  const geometry = new THREE.ExtrudeGeometry( shape, extrudeSettings );
+  // geometry.setAttribute( 'position', new THREE.Float32BufferAttribute( positions, 3 ) );
+  geometry.setAttribute( 'color', new THREE.Float32BufferAttribute( colors, 2 ) );
+//  material = new THREE.MeshBasicMaterial( { color: 0x463fa5, wireframe: true } );
+  const mesh = new THREE.Mesh( geometry, material ) ;
+  scene.add( mesh );
+
+
+  
+
+
+  function setBackground () {
+    const vertices = [];
+
+  for ( let i = 0; i < 10000; i ++ ) {
+
+  const x = THREE.MathUtils.randFloatSpread( 2000 );
+  const y = THREE.MathUtils.randFloatSpread( 2000 );
+  const z = THREE.MathUtils.randFloatSpread( 2000 );
+
+  vertices.push( x, y, z );
+
+  }
+
+  const geometry = new THREE.BufferGeometry();
+  geometry.setAttribute( 'position', new THREE.Float32BufferAttribute( vertices, 3 ) );
+
+  const material = new THREE.PointsMaterial( { color: 0x888888 } );
+
+  const points = new THREE.Points( geometry, material );
+
+  scene.add( points );
+  }
+  setBackground();
+  camera.position.z = 20;
+
+var cols = [{
+  stop: 0,
+  color: new THREE.Color(0xf7b000)
+}, {
+  stop: .25,
+  color: new THREE.Color(0xdd0080)
+}, {
+  stop: .5,
+  color: new THREE.Color(0x622b85)
+}, {
+  stop: .75,
+  color: new THREE.Color(0x007dae)
+}, {
+  stop: 1,
+  color: new THREE.Color(0x77c8db)
+}];
+
 
 // Add Lights
-var ambientLight = new THREE.AmbientLight(0xFFFFFF, 5.0);
+var ambientLight = new THREE.AmbientLight(0xFFFFFF, 1.5);
+scene.add(ambientLight);
 
 // Setup update method
 // Will be called every frame, every change
